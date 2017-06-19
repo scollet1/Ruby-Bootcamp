@@ -1,2 +1,2 @@
 # Ruby-Bootcamp
-A bootcamp I helped mentor
+A bootcamp mentored by students at 42 to teach highschoolers Ruby.
