@@ -12,6 +12,8 @@
 
 .git-link {
   color: black;
+  text-shadow: 2px 2px #ff0000;
+  font-size: 250%;
   font-style: italic;
   font-family: 'Play', sans-serif;
 }
