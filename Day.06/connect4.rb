@@ -81,6 +81,10 @@ def check(player, board, y, x, count = 0)
   while count < 4
     if (board[y][x] == "x")
       count += 1
+
+    else
+
+    end
   end
 
   if player == 1
