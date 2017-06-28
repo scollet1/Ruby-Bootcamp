@@ -6,7 +6,7 @@
 #    By: scollet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/18 14:11:47 by scollet           #+#    #+#              #
-#    Updated: 2017/06/27 16:36:39 by scollet          ###   ########.fr        #
+#    Updated: 2017/06/28 14:42:11 by scollet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,10 @@ end
 
 ########### GAME ###########
 
-#def win(player)
-#{
-
-#}
+def win(player)
+  puts "Player #{player} win won, owoowoWOWOWOowoowoOWOWOWOwOWWOOWWWOWOWoowoow...\n"
+  exit
+end
 
 def play(player, board, height = 17, width = 25)
 	draw(board, height, width)
@@ -63,46 +63,46 @@ def try(move, board, player, height, width)
 		if ((y == height - 1 && board[y][move] == ".") || (board[y + 1][move] != "."))
 			if player == 0
 				board[y][move] = "\033[31mx\033[0m"
-        check(board, y, move)
-        win(player)
+        check(player, board, y, move, 0, height, width)
         play(1, board, height, width)
 			elsif player == 1
 				board[y][move] = "\033[32mo\033[0m"
-        check(board, y, move, 0)
+        check(player, board, y, move, 0, height, width)
         play(0, board, height, width)
-        end
-			end
+      end
 		end
-		y += 1
+    y += 1
 	end
 end
 
-def check(player, board, y, x, count = 0)
-  while count < 4
-    if (board[y][x] == "x")
-      count += 1
-
-    else
-
+def check(player, board, y, x, count = 0, height, width)
+  y = 0
+  while y < height - 3
+    #print y
+    #print "\n"
+    x = 0
+    while x < width - 3
+      #print x
+      if player == 1
+        if  (board[y][x] == "\033[31mx\033[0m" && board[y][x + 1] == "\033[31mx\033[0m" && board[y][x + 2] == "\033[31mx\033[0m" && board[y][x + 3] == "\033[31mx\033[0m") ||
+            (board[y][x] == "\033[31mx\033[0m" && board[y + 1][x] == "\033[31mx\033[0m" && board[y + 2][x] == "\033[31mx\033[0m" && board[y + 3][x] == "\033[31mx\033[0m") ||
+            (board[y][x] == "\033[31mx\033[0m" && board[y + 1][x + 1] == "\033[31mx\033[0m" && board[y + 2][x + 2] == "\033[31mx\033[0m" && board[y + 3][x + 3] == "\033[31mx\033[0m")
+              puts "dank"
+              win(player)
+        end
+      elsif player == 2
+        if (board[y][x] == "\033[32mx\033[0m" && board[y][x + 1] == "\033[32mx\033[0m" && board[y][x + 2] == "\033[32mx\033[0m" && board[y][x + 3] == "\033[32mx\033[0m") ||
+            (board[y][x] == "\033[32mx\033[0m" && board[y + 1][x] == "\033[32mx\033[0m" && board[y + 2][x] == "\033[32mx\033[0m" && board[y + 3][x] == "\033[32mx\033[0m") ||
+            (board[y][x] == "\033[32mx\033[0m" && board[y + 1][x + 1] == "\033[32mx\033[0m" && board[y + 2][x + 2] == "\033[32mx\033[0m" && board[y + 3][x + 3] == "\033[32mx\033[0m")
+              win(player)
+        end
+      end
+      x += 1
     end
-  end
-
-  if player == 1
-    if (board[y][x] == "x" && board[y + 1][x] == "x" && board[y + 2][x] == "x" && board[y + 3][x] == "x") ||
-      (board[y][x] == "x" && board[y - 1][x] == "x" && board[y - 2][x] == "x" && board[y - 3][x] == "x") ||
-      (board[y][x] == "x" && board[y][x + 1] == "x")
-
-
-
-  if player == 1
-    if (board[y][x] == "x" && board[])
-  elsif player == 0
-
-  else
-    abort("Error, something went wrong.")
+    #print "\n"
+    y += 1
   end
 end
-
 ################################
 
 ########### ASSETS ###########
@@ -130,7 +130,7 @@ def title(x, height)
 end
 
 def draw(board, height, width)
-	system "clear"
+	#system "clear"
 		y = 0
   	while y < height do
     	x = 0
