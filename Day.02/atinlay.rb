@@ -21,7 +21,7 @@ if ARGV.empty?
 else
   ARGV.each do |string|
     matches = string.scan(/^([^aeiouy]+)?(.+)/) { |first, second|
-	  if first != nil
+	    if first != nil
         puts second + first + ay
       elsif first == nil
         puts second + way

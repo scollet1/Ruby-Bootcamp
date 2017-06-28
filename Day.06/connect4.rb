@@ -15,11 +15,8 @@
 width = ARGV[0].to_i
 height = ARGV[1].to_i
 board = Array.new(height){Array.new(width, ".")}
-#board.each {|a| p a}
 
-#puts "\n"
-#arr[5][4] = "x"
-#arr.each {|a| p a}
+########## COLORS ##########
 
 def colorize(text, color_code)
   "#{color_code}#{text}e[0m"
@@ -31,7 +28,16 @@ def error
 	puts "Press any key to continue."
 end
 
-def play(player, board, height, width)
+############################
+
+########### GAME ###########
+
+#def win(player)
+#{
+
+#}
+
+def play(player, board, height = 17, width = 25)
 	draw(board, height, width)
 	print "Player #{player + 1}, enter a column: "
   	move = STDIN.gets.to_i - 1
@@ -57,39 +63,78 @@ def try(move, board, player, height, width)
 		if ((y == height - 1 && board[y][move] == ".") || (board[y + 1][move] != "."))
 			if player == 0
 				board[y][move] = "\033[31mx\033[0m"
-				play(1, board, height, width)
+        check(board, y, move)
+        win(player)
+        play(1, board, height, width)
 			elsif player == 1
 				board[y][move] = "\033[32mo\033[0m"
-				play(0, board, height, width)
+        check(board, y, move, 0)
+        play(0, board, height, width)
+        end
 			end
 		end
 		y += 1
 	end
-=begin
+end
 
-	while y < height - 1
-		if y == 0 && board[y][move] != "."
-			puts "Space full, try again."
-			play(player, board, height, width)
-		elsif y == height || board[y + 1][move] != "."
-			if player == 0
-				board[y][move] = "x"
-			elsif player == 1
-				board[y - 3][move] = "o"
-			end
-		elsif board[y][move] == "."
-			y += 1
-		end
-=end
+def check(player, board, y, x, count = 0)
+  while count < 4
+    if (board[y][x] == "x")
+      count += 1
+  end
+
+  if player == 1
+    if (board[y][x] == "x" && board[y + 1][x] == "x" && board[y + 2][x] == "x" && board[y + 3][x] == "x") ||
+      (board[y][x] == "x" && board[y - 1][x] == "x" && board[y - 2][x] == "x" && board[y - 3][x] == "x") ||
+      (board[y][x] == "x" && board[y][x + 1] == "x")
+
+
+
+  if player == 1
+    if (board[y][x] == "x" && board[])
+  elsif player == 0
+
+  else
+    abort("Error, something went wrong.")
+  end
+end
+
+################################
+
+########### ASSETS ###########
+
+def title(x, height)
+	if x == 0 || x == height - 1
+		print "*"
+	elsif ((x == (height / 2) - 4) || (x == (height / 2) + 1))
+		print "\033[34mC\033[0m"
+	elsif x == height / 2 - 3
+		print "\033[34mO\033[0m"
+	elsif ((x == height / 2 - 1) || (x == (height / 2) - 2))
+		print "\033[34mN\033[0m"
+	elsif x == height / 2
+		print "\033[34mE\033[0m"
+	elsif x == height / 2 + 2
+		print "\033[34mT\033[0m"
+	elsif x == height / 2 + 3
+		print "\033[34m4\033[0m"
+	elsif x == height / 2 + 4
+		print "\033[34m2\033[0m"
+	else
+		print "π"
+	end
 end
 
 def draw(board, height, width)
 	system "clear"
-  	y = 0
+		y = 0
   	while y < height do
-		print "|"
     	x = 0
     	while x < width do
+					if x == 0
+						title(y, height)
+						print "|"
+					end
       		print board[y][x]
       		x += 1
     	end
@@ -99,6 +144,10 @@ def draw(board, height, width)
 end
 
 play(0, board, height, width)
+
+##############################
+
+########### STUFF ############
 
 =begin
 def init(arr)
@@ -136,3 +185,5 @@ init(arr)
 arr[4][4] = "x"
 #display(arr)
 =end
+
+###############################
